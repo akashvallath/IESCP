@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="width: 900px; background-color:linen;">
+    <h2 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center; color:rgb(93, 93, 208);">Update Card Details</h2>
+    <hr>
+    <form action="{{url_for('post_updatecarddetails', id=sponsor.id)}}" method="POST">
+        <label for="bank" class="form-label">Select Bank</label>
+        <select name="bank" style="margin-bottom: 10px;">
+            <option value="sbi">State Bank of India</option>
+            <option value="axis">Axis Bank</option>
+            <option value="icici">ICICI</option>
+            <option value="federalbank">Federal Bank</option>
+            <option value="boi">Bank of India</option>
+            <option value="punjab">Punjab National Bank</option>
+            <option value="idfc">IDFC</option>
+            <option value="hdfc">HDFC</option>
+            <option value="idbi">IDBI</option>
+        </select>
+        <label for="cardnumber" class="form-label">Card Number</label>
+        <input placeholder="must be 16 digits" style="margin-bottom: 10px;" class="form-control" type="number" name="cardnumber" required>
+        <label for="cvv" class="form-label">CVV</label>
+        <input placeholder="3 didits" style="width: 100px; margin-bottom: 10px;" class="form-control" type="number" name="cvv" required>
+        <label for="password" class="form-label">Enter your Password</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="password" name="password" required>
+        <div style="display: flex; justify-content: center;">
+            <button style="width: 120px;" class="btn"  type="submit"><b>UPDATE</b></button>
+        </div>
+    </form>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

@@ -1,0 +1,264 @@
+body {
+background-size: cover;
+background-position: center;
+font-family:'Inter', sans-serif;
+font-size: medium;
+font-weight: 400;
+}
+.navbar {
+background-size: cover;
+background-position: center;
+color: black;
+position: fixed;
+padding: 15px;
+border-radius: 5px;
+box-sizing: border-box;
+display: flex;
+flex-direction:row;
+}
+.navbar a {
+color: black;
+text-decoration: none;
+font-weight: bolder;
+display: block;
+margin-right: 6px;
+margin-left: 6px;
+padding: 10px;
+border-radius: 5px;
+transition: background-color 0.3s, padding-left 0.3s, box-shadow 0.3s;
+}
+.navbar a:hover {
+background-color:#ccc;
+padding-left: 10px;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.no-hover:hover {
+  background-color: initial !important;
+  padding-left: initial !important;
+  box-shadow: none !important;
+}
+.logo {
+  width: 75px; /* Set the desired width */
+  height: 60px; /* Set the desired height */
+  border-radius: 50%; /* Make the image round */
+  overflow: hidden; /* Ensure the image fits within the container */
+}
+.content {
+padding: 20px;
+}
+.container {
+background-color:silver;
+padding: 10px;
+border-radius: 5px;
+box-shadow:2px 2px 10px 2px lightgray;
+margin-top: 2px;
+margin-bottom: 12px;
+}
+.container label {
+font-weight: bold;
+color:black;
+display: block;
+margin-bottom: 5px;
+margin-left: 20px;
+}
+.container input{
+width: 75%;
+padding: 5px;
+margin: 2px 0 5px 0;
+margin-left: 20px;
+display: block;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+}
+.container button {
+  background-color:#3a4ddada;
+  color: white;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 90px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.container button:hover {
+  background-color:rgb(11, 43, 172);
+}
+.container textarea {
+  width: 75%;
+  padding: 10px;
+  margin: 5px 0 10px 0;
+  margin-left: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.container select{
+  margin-left: 20px;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  background-color: #333;
+  color: white;
+  border-top: 1px solid #444;
+  bottom: 0;
+  width: 100%;
+  margin-top: 50px;
+}
+footer a{
+  text-decoration: none;
+}
+input, textarea {
+  width: 80%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.form-check input{
+  width:0px;
+}
+.form-check label{
+  padding:4px;
+}
+.underline {
+  text-decoration: underline;
+}
+.checkbox-group {
+  display: block;
+}
+
+.checkbox-item {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+.checkbox-item input {
+  margin-right: 5px;
+}
+.checkbox-item input[type="checkbox"] {
+  width: 20px; /* Width of the checkbox */
+  height: 20px; /* Height of the checkbox */
+}
+.roundimage {
+  width: 50px; /* Set the desired width */
+  height: 50px; /* Set the desired height */
+  border-radius: 50%; /* Make the image round */
+  overflow: hidden; /* Ensure the image fits within the container */
+}
+.profileimage {
+  width: 200px; /* Set the desired width */
+  height: 200px; /* Set the desired height */
+  border-radius: 50%; /* Make the image round */
+  overflow: hidden; /* Ensure the image fits within the container */
+}
+.button-container {
+  display:flex;
+  align-items: center;
+}
+.button-container a {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 5px;
+  min-width: 70px;
+  cursor: pointer;
+  background-color:#3848d8e1;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  display: inline-block; /* Ensure it behaves like a button */
+}
+.button-container a:hover {
+  background-color:#7d7cd1;
+}
+.request-container {
+  background-color:darkgray;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.request-container p {
+  font-size: 16px;
+  color: #333;
+}
+.request-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.button-container {
+  margin-top: 20px;
+}
+.button-container a{
+  color:white;
+}
+
+.btn.accept {
+  background-color:green;
+}
+
+.btn.accept:hover {
+  background-color: #218838;
+}
+
+.btn.reject {
+  background-color: rgb(201, 23, 23);
+}
+
+.btn.reject:hover {
+  background-color: #c82333;
+}
+.campaigninrows{
+  display: flex; 
+  flex-direction: row; 
+  font-size: small; 
+}
+.campaigninrows p a{
+  text-align: center;
+}
+table {
+  width: 100%;
+}
+th, td {
+  font-size: small;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  word-wrap: break-word;
+}
+th {
+  background-color: #f2f2f2;
+}
+table a{
+  text-decoration: none;
+}
+table a:hover {
+  text-decoration: underline;
+}
+.search {
+  background-color:black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 2px;
+  margin-bottom: 20px;
+}

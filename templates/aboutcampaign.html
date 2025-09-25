@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="background-color: rgb(142, 200, 245);">
+        <h1>Types of Influencer Collaborations</h1>
+    <ul>
+        <li><strong>Sponsored Content</strong>
+            <ul>
+                <li>Sponsored Posts: Influencers create and share content featuring a brand's product or service in exchange for payment or free products.</li>
+                <li>Sponsored Stories/Reels: Similar to sponsored posts but shared through Stories or short-form videos like Reels on platforms like Instagram.</li>
+            </ul>
+        </li>
+        <li><strong>Product Reviews</strong>
+            <ul>
+                <li>Unboxing Videos: Influencers open and showcase a new product, sharing their first impressions.</li>
+                <li>Detailed Reviews: Influencers provide an in-depth review of a product, discussing its features, pros, and cons.</li>
+            </ul>
+        </li>
+        <li><strong>Giveaways and Contests</strong>
+            <ul>
+                <li>Collaborative Giveaways: Brands partner with influencers to run contests or giveaways, encouraging followers to participate by engaging with the content.</li>
+            </ul>
+        </li>
+        <li><strong>Affiliate Marketing</strong>
+            <ul>
+                <li>Affiliate Links: Influencers share trackable links or discount codes with their audience, earning a commission for every sale made through those links.</li>
+            </ul>
+        </li>
+        <li><strong>Brand Ambassadorships</strong>
+            <ul>
+                <li>Long-term Partnerships: Influencers represent a brand over an extended period, regularly creating content and participating in promotional activities.</li>
+            </ul>
+        </li>
+        <li><strong>Event Hosting and Participation</strong>
+            <ul>
+                <li>Hosting Events: Influencers host live or virtual events for a brand.</li>
+                <li>Attending Events: Influencers attend and cover events, such as product launches, fashion shows, or conferences, sharing their experiences with their audience.</li>
+            </ul>
+        </li>
+        <li><strong>Content Creation</strong>
+            <ul>
+                <li>Guest Blogging/Vlogging: Influencers create blog posts, videos, or other content for a brand’s platform.</li>
+                <li>Takeovers: Influencers temporarily take over a brand's social media account, creating and sharing content directly with the brand's audience.</li>
+            </ul>
+        </li>
+        <li><strong>Collaborative Products</strong>
+            <ul>
+                <li>Co-branded Products: Influencers work with brands to design and launch limited-edition products.</li>
+                <li>Influencer Lines: More extensive collaborations where influencers develop their own product lines with a brand.</li>
+            </ul>
+        </li>
+        <li><strong>Social Media Challenges</strong>
+            <ul>
+                <li>Hashtag Campaigns: Influencers promote a brand through a specific hashtag, encouraging their followers to participate and create their own content.</li>
+            </ul>
+        </li>
+        <li><strong>Interviews and Features</strong>
+            <ul>
+                <li>Interviews: Brands feature influencers in interviews, sharing their insights and experiences.</li>
+                <li>Features in Brand Publications: Influencers are highlighted in a brand’s newsletter, blog, or other publications.</li>
+            </ul>
+        </li>
+        <li><strong>Educational Content</strong>
+            <ul>
+                <li>Webinars and Workshops: Influencers conduct educational sessions or workshops related to the brand's industry.</li>
+                <li>Tutorials: Influencers create step-by-step guides or tutorials featuring a brand's product.</li>
+            </ul>
+        </li>
+        <li><strong>Collaborative Live Streams</strong>
+            <ul>
+                <li>Live Q&A Sessions: Influencers host live sessions to answer questions about a brand or product.</li>
+                <li>Joint Live Streams: Influencers and brand representatives co-host live streams, engaging with the audience in real-time.</li>
+            </ul>
+        </li>
+    </ul>
+    </div>
+</div>
+<footer>
+    <p>©Copyright 2050 by <b>Akash_vallath</b>. All rights reversed.</p>
+    <a href="{{url_for('guideline')}}" style="margin-right: 20px;">Guidelines</a>
+    <a href="#" style="margin-right: 20px;">Contact</a>
+    <a href="{{url_for('campaigndetail')}}" style="margin-right: 20px;">About Campaigns</a>
+</footer>
+{% endblock body %}

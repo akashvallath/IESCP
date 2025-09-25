@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div style="margin-left: 10px;">
+        <img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi">
+        <h5 style="display: inline;">{{ admin.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('admin_stats', id=admin.id)}}"><i class="fa-solid fa-chart-column"></i> Stats</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container">
+        <h3 style="text-align: center; color: slateblue;">Feedbacks</h3>
+        {% if feedback %}
+        {% for feed in feedback %}
+        <div>
+            <h5>{{ feed.sponsor.username }}</h5>
+            <small>{{ feed.date.strftime('%B %d, %Y') }}</small>
+            <p>Experience : {{ feed.camp_exp }}</p>
+            <p>Suggestion : {{ feed.suggestions}}</p>
+        </div><hr>
+        {% endfor %}
+        {% else %}
+        <p>No feedbacks to show!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

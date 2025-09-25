@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h6 style="display: inline;">{{ sponsor.username }}</h6>
+    </div>
+    <a href="{{url_for('sponsor_mycampaigns', id=sponsor.id)}}"><i class="fa-solid fa-globe"></i> My Campaigns</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('find_influencers_for_sponsor', id=sponsor.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Influencers</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <h3 style=" margin-left: 10px; margin-bottom: 15px;">Welcome, {{sponsor.username}}</h3>
+    <div class="container" style="display: flex; background-color: rgb(148, 128, 216);">
+        <div style="margin-left: 10px;">
+            <h5>↓Total Campaigns </h5>
+            <h2>{{tcamp}}</h2>
+        </div>
+        <div style="margin-left: 50px;">
+            <h5>↓Active Campaigns </h5>
+            <h2>{{active_campaigns}}</h2>
+        </div>
+        <div style="margin-left: 50px;">
+            <h5>↓Active Participants </h5>
+            <h2>{{tcont}}</h2>
+        </div>
+        <div style="margin-left: 50px;">
+            <h5>↓Total Requests </h5>
+            <h2>{{ influencer_requests|length }}</h2>
+        </div>
+        <div style="margin-left: 50px;">
+            <h5>↓Pending Requests </h5>
+            <h2>{{ my_requests|length }}</h2>
+        </div>
+    </div>
+    {% if negotiations %}
+    <div class="container" style="margin-top: 20px;">
+        <h4 style="margin-left: 10px; margin-bottom: 15px;">Influencer Negotiation 😀</h4>
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>INFLUENCER</th>
+            <th>TYPE</th>
+            <th>BUDGET</th>
+            <th>NEGOTIATED BUDGET</th>
+            <th>ACCEPT</th>
+            <th>REJECT</th>
+        </tr>
+        {% for naggots in negotiations %}
+        <tr>
+            <td><a href="{{url_for('camapign_details_forsponsor', id=naggots.campaign.id)}}"><b>{{ naggots.campaign.name }}</b></a></td>
+            <td><a href="{{url_for('influencerprofileforsponsor', id=sponsor.id, influencer_id=naggots.influencer.id)}}"><b>{{ naggots.influencer.username }}</b></a></td>
+            <td>{{ naggots.campaign.typeofcampaign }}</td>
+            <td>{{ naggots.campaign.budget }}</td>
+            <td>{{ naggots.budget }}</td>
+            <td><a href="{{url_for('acceptnegotiation', id=sponsor.id, campaign_id=naggots.campaign.id, influencer_id=naggots.influencer.id)}}"><b>Accept</b></a></td>
+            <td><a href="{{url_for('rejectnegotiation', id=sponsor.id, campaign_id=naggots.campaign.id, influencer_id=naggots.influencer.id)}}"><b>Reject</b></a></td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    {% if pending_payments %}
+    <div class="container">
+        <h5>Pending Payments 💰</h5>
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>INFLUENCER</th>
+            <th>COMPLETED DATE</th>
+            <th>PAYMENT AMOUNT</th>
+            <th></th>
+        </tr>
+        {% for event in pending_payments %}
+        <tr>
+            <td><a href="{{url_for('camapign_details_forsponsor', id=event.campaign.id)}}"><b>{{event.campaign.name}}</b></a></td>
+            <td><a href="{{url_for('influencerprofileforsponsor', id=sponsor.id, influencer_id=event.influencer_id)}}"><b>{{event.influencer.username}}</b></a></td>
+            <td>{{ event.completeddate.strftime('%B %d, %Y') }}</td>
+            <td>{{ event.budget }} ₹</td>
+            <td><a href="{{url_for('dopayment', id=sponsor.id, campaign_id=event.campaign_id)}}"><b>PAY NOW</b></a></td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    <div class="container" style="margin-top: 20px;">
+        <h4 style="margin-left: 10px; margin-bottom: 15px;">Influencer Requests 😀</h4>
+        {% if influencer_requests %}
+        <table>
+            <tr>
+                <th>CAMPAIGN NAME</th>
+                <th>TYPE</th>
+                <th>END DATE</th>
+                <th>BUDGET</th>
+                <th>INFLUENCER</th>
+                <th>ACCEPT</th>
+                <th>REJECT</th>
+            </tr>
+        {% for request in influencer_requests %}
+        <tr>
+            <td><a href="{{url_for('camapign_details_forsponsor', id=request.campaign.id)}}"><b>{{ request.campaign.name }}</b></a></td>
+            <td>{{ request.campaign.typeofcampaign }}</td>
+            <td>{{ request.campaign.deadline.strftime('%B %d, %Y') }}</td>
+            <td>{{ request.campaign.budget }}</td>
+            <td><a href="{{url_for('influencerprofileforsponsor', id=sponsor.id, influencer_id=request.influencer.id)}}"><b>{{ request.influencer.username }}</b></a></td>
+            <td><a href="{{url_for('sponsor_campaign_accept_reject', operation='accept', campaign_id=request.campaign.id, influencer_id=request.influencer.id, sponsor_id=request.sponsor.id)}}"><b>Accept</b></a></td>
+            <td><a href="{{url_for('sponsor_campaign_accept_reject', operation='reject', campaign_id=request.campaign.id, influencer_id=request.influencer.id, sponsor_id=request.sponsor.id)}}"><b>Reject</b></a></td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 15px;">No pending requests!</p>
+        {% endif %}
+    </div>
+    {% if my_requests %}
+    <div class="container" style="margin-top: 20px;">
+        <h4 style="margin-left: 10px; margin-bottom: 15px;">Your Requests 😀</h4>
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>TYPE</th>
+            <th>START DATE</th>
+            <th>END DATE</th>
+            <th>BUDGET</th>
+            <th>INFLUENCER</th>
+            <th>DELETE</th>
+        </tr>
+        {% for request in my_requests %}
+        <tr>
+            <td><a href="{{url_for('camapign_details_forsponsor', id=request.campaign.id)}}"><b>{{ request.campaign.name }}</b></a></td>
+            <td>{{ request.campaign.typeofcampaign }}</td>
+            <td>{{ request.campaign.created_on.strftime('%B %d, %Y') }}</td>
+            <td>{{ request.campaign.deadline.strftime('%B %d, %Y') }}</td>
+            <td>{{ request.campaign.budget }}</td>
+            <td><a href="{{url_for('influencerprofileforsponsor', id=sponsor.id, influencer_id=request.influencer.id)}}">{{ request.influencer.username }}</a></td>
+            <td><a href="{{url_for('sponsor_delete_request', id=sponsor.id, campaign_id=request.campaign.id)}}"><b>Delete</b></a></td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

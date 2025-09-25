@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block title %}statistics{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{ url_for('influencer_find_campaign', id=influencer.id )}}"><i class="fa-solid fa-magnifying-glass"></i> Campaigns</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div style="margin-left: 240px; width: 700px; height: 700px;">
+        {% if tccdata['data'] %}
+        <h5 style="text-align: center;">Total Campaigns Joined : {{ tc_joined }}</h5>
+        <canvas id="mytcChart"></canvas><hr>
+        {% else %}
+        <p style="text-align: center;">No campaigns Joined to show Graph !</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
+{% block script%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctc = document.getElementById('mytcChart');
+const tlabels = {{ tccdata['labels'] | tojson }};
+const tdata = {{ tccdata['data'] | tojson }};
+
+
+new Chart(ctc, {
+type: 'bar',
+data: {
+    labels: tlabels,
+    datasets: [{
+    label: '# of Campaigns',
+    data: tdata,
+    borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+    y: {
+        beginAtZero: true
+    }
+    }
+}
+});
+</script>
+{% endblock script %}

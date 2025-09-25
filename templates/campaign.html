@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+{% block title %}Campaign{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i>Home</a>
+    <a href="{{ url_for('influencer_find_campaign', id=influencer.id )}}"><i class="fa-solid fa-magnifying-glass"></i> Campaigns</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i>Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i>Login</a>
+    {% endif %}
+</div>
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="background-color:lightsteelblue;">
+        <h2 style="color: rgb(31, 29, 29); text-align: center;">← {{sponsor.companyname}} →</h2><hr>
+        <div>
+            <p>{{ sponsor.companybackground }}</p>
+        </div>
+        <div>
+            <p style="color: rgb(36, 36, 40); font-family:Georgia, 'Times New Roman', Times, serif; font-size: x-large; font-style: italic;">{{ campaign.typeofcampaign}}</p>
+            <p style="font-style: italic; font-weight: 500;">✓ {{ campaign.description }}</p>
+            <p style=" font-weight: 500;">✓ {{ campaign.goals }}</p>
+        </div>
+        {% if ongoing_event %}
+        <p>Budget : <b>{{ongoing_event.budget}} ₨</b></p>
+        {% else %}
+        <p>Budget : <b>{{campaign.budget}} ₨</b></p>
+        {% endif %}
+        <p>Intended Audience : <b>{{campaign.audience}}</b></p>
+        <div style="display: flex;">
+            <p style="font-style: italic;">Contact us : <b>{{ sponsor.email }}</b></p>
+        </div>
+        <div style="display: flex; justify-content: space-between; width: 60%;">
+            <p>created on : <b>{{campaign.created_on.strftime('%B %d, %Y')}}</b></p>
+            <p>complete before : <b>{{campaign.deadline.strftime('%B %d, %Y')}}</b></p>
+        </div>
+        <a href="{{url_for('sponsorprofileforinfluencer', id=influencer.id, sponsor_id=campaign.sponsor.id)}}"><b>{{campaign.sponsor.username}}</b></a>
+        <div class="button-container" style="justify-content: center;">
+            {% if completed_button %}
+            <a href="{{url_for('campaign_completed', id=ongoing_event.id, influencer_id=ongoing_event.influencer_id)}}"><b>Completed campaign</b></a>
+            {% else %}
+            {% if update_progress %}
+            <a href="#" onclick="showupdatebar()"><b>Update Progress</b></a>
+            {% elif accept %}
+            <a href="{{url_for('influencer_campaign_accept_reject', operation='accept',campaign_id=campaign.id,influencer_id=influencer.id,sponsor_id=sponsor.id)}}"><b>Accept</b></a>
+            <a href="#" onclick="shownegotiatebar()"><b>Negotiate</b></a>
+            {% else %}
+            <a href="{{url_for('influencer_request', campaign_id=campaign.id, influencer_id=influencer.id)}}"><b>Request</b></a>
+            <a href="#" onclick="shownegotiatebar()"><b>Negotiate</b></a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="container" id="update" style="display: none;">
+        <table style="display: flex; flex-direction: row; justify-content: space-between;">
+        <form role="search" >
+        <tr>
+            <td>
+                <label for="progress">Progress </label>
+            </td>
+            <td>
+                <input type="number" name="progress" id="progress" min="0" max="100" required>
+            </td>
+            <td>
+                <button onclick="submitupdate()" class="btn btn-primary" style="height: 40px; margin-bottom: 10px;"><b>submit</b></button>
+            </td>
+            <td>Submit percentage of progress(number between 0 and 100)</td>
+            {% if ongoing_event %}
+            <td style="color: green;">Your current progress : {{ongoing_event.progress}}</td>
+            {% endif %}
+        </tr>
+        </form>
+        </table>
+    </div>
+    <div class="container" id="negotiate" style="display: none;">
+        <table style="display: flex; flex-direction: row; justify-content: space-between;">
+        <form role="search" >
+        <tr>
+            <td>
+                <label for="budget">Negoatiate Budget </label>
+            </td>
+            <td>
+                <input type="number" name="budget" id="budget" required>
+            </td>
+            <td>
+                <button onclick="submitnegotiate()" class="btn btn-primary" style="height: 40px; margin-bottom: 10px;"><b>submit</b></button>
+            </td>
+        </tr>
+        </form>
+        </table>
+    </div>
+    {% if negotiate %}
+    <div class="container" style="margin-top: 20px;">
+        <h4 style="margin-left: 10px; margin-bottom: 15px;">Negotiation</h4>
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>TYPE</th>
+            <th>BUDGET</th>
+            <th>NEGOTIATED BUDGET</th>
+            <th>DELETE</th>
+        </tr>
+        <tr>
+            <td><a href="{{url_for('camapign_details_forsponsor', id=negotiate.campaign.id)}}"><b>{{ negotiate.campaign.name }}</b></a></td>
+            <td>{{ negotiate.campaign.typeofcampaign }}</td>
+            <td>{{ negotiate.campaign.budget }}</td>
+            <td>{{ negotiate.budget }}</td>
+            <td><a href="{{url_for('deletenegotiation', id=influencer.id, campaign_id=campaign.id)}}"><b>Delete</b></a></td>
+        </tr>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% include 'footer.html' %}
+{% endblock body %}
+{% block script%}
+<script>
+function showupdatebar() {
+    document.getElementById('update').style.display = 'block';
+}
+function submitupdate() {
+    document.getElementById('update').style.display = 'none';
+}
+function shownegotiatebar() {
+    document.getElementById('negotiate').style.display = 'block';
+}
+function submitnegotiate() {
+    document.getElementById('negotiate').style.display = 'none';
+}
+</script>
+{% endblock script %}

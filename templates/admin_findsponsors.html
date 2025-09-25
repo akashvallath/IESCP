@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% block title %}search-sponsors{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div style="margin-left: 10px;">
+        <img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi">
+        <h5 style="display: inline;">{{ admin.username }}</h5>
+    </div>
+    <a href="{{url_for('sponsor_fb', id=admin.id)}}"><i class="fa-solid fa-file-pen"></i> feedback</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('find_influencersforadmin', id=admin.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Influencers</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="search">
+        <table style="display: flex; flex-direction: row; justify-content: space-between;">
+        <form role="search" >
+        <tr>
+            <td><label style="font-size: large;" class="form-lable">Industry-Sector</label></td>
+            <td>
+                <select class="form-select" name="industrysector" style="width: 250px; height: 40px; margin-top: 2px;">
+                    <option value="" disabled selected>ALL</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Others">Others</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-primary" style="height: 40px; margin-top: 2px;"><b>search</b></button>
+            </td>
+        </tr>
+        </form>
+        </table>
+    </div>
+    <div class="container" style="display: flex; background-color: rgb(148, 128, 216);">
+        <div style="margin-left: 50px;">
+            <h5>↓Total Sponsors </h5>
+            <h2>{{ sponsors | length }}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <h4 style="margin-left: 10px; margin-bottom: 15px; font-family: 'Times New Roman', Times, serif;">Sponsor's 😍</h4>
+        {% if sponsors %}
+        <table>
+        <tr>
+            <th>USERNAME</th>
+            <th>COMPANY</th>
+            <th>EMAIL</th>
+            <th>INDUSTRY-SECTOR</th>
+            <th>FLAG</th>
+        </tr>
+        {% for sponsor in sponsors %}
+        <tr>
+            <td><a href="{{url_for('sponsorprofileforadmin', id=admin.id, sponsor_id= sponsor.id)}}"><b>{{ sponsor.username }}</b></a></td>
+            <td>{{ sponsor.companyname }}</td>
+            <td>{{ sponsor.email }}</td>
+            <td>{{ sponsor.industrysector }}</td>
+            <td style="display: flex; flex-direction: row; justify-content: space-between;">
+                <a href="{{url_for('flagsponsor', id=admin.id, sponsor_id=sponsor.id)}}">🚩flag</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">Sorry currently No Sponsors are available!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

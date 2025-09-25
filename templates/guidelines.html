@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block style %}
+<style>
+h2{
+    font-family: fantasy;
+}
+h4{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+</style>
+{% endblock style %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="background-color: rgb(142, 200, 245);">
+        <h1 style="text-align: left; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Guidelines</h1>
+    <br>
+    <h2>For Sponsors:</h2>
+    <h4>Create Campaigns:</h4>
+    <p>
+        Sponsors can create multiple campaigns tailored to their specific needs.
+        Define campaign goals, target audience, and budget.
+    </p>
+    <h4>Search for Influencers:</h4>
+    <p>
+        Easily find influencers based on industry, niche, and reach.
+        Send personalized ad requests to influencers for your campaigns.
+    </p>
+    <h4>Track Campaigns:</h4>
+    <p>
+        Monitor the performance of each campaign.
+        See engagement metrics, conversions, and ROI.
+    </p>
+    <br>
+    <h2>For Influencers:</h2>
+    <h4>Receive Ad Requests:</h4>
+    <p>
+        As an influencer, you’ll receive ad requests from sponsors.
+        Accept or reject requests based on your preferences.
+    </p>
+    <h4>Negotiate and Collaborate:</h4>
+    <P>
+        Negotiate terms directly with sponsors.
+        Modify ad requests and send them back for approval.
+    </P>
+    <h4>Search and Participate:</h4>
+    <P>
+        Explore ongoing public campaigns.
+        Filter by category, budget, and other criteria.
+        Accept requests that align with your brand.
+    </P>
+    <h4>Public Profiles:</h4>
+    <p>
+        Both sponsors and influencers have public profiles.
+        Showcase your brand, expertise, and reach.
+        Let the world know what you’re all about!
+        Join our platform today and unlock the power of collaboration. Whether you’re a sponsor seeking exposure or an influencer looking for exciting opportunities, we’ve got you covered! 😊
+    </p>
+    </div>
+</div>
+<footer>
+    <p>©Copyright 2050 by <b>Akash_vallath</b>. All rights reversed.</p>
+    <a href="{{url_for('guideline')}}" style="margin-right: 20px;">Guidelines</a>
+    <a href="#" style="margin-right: 20px;">Contact</a>
+    <a href="{{url_for('campaigndetail')}}" style="margin-right: 20px;">About Campaigns</a>
+</footer>
+{% endblock body %}

@@ -1,0 +1,9 @@
+<div class="navbar">
+    <img style="margin-left: 8px;" class="logo" src="{{url_for('static', filename = 'logo/' + 'spin-04.png')}}" alt="logo of the webapp">
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"> <i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>

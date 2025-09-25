@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ sponsor.username }}</h5>
+    </div>
+    <a style="margin-right: 80px;" href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <p style="margin-left: 40px; font-family: 'Roboto Mono', sans-serif;">Just update want you want to update.Leaving everything else!</p>
+    <div class="container" style="width: 850px; margin-top: 30px; background-color: linen;">
+        <form action="{{url_for('sponsor_edit_profile_post', id=sponsor.id)}}" method="post" enctype="multipart/form-data">
+            <p>Account info ➡️ </p>
+            <label class="form-label" for="username">username</label>
+            <input value="{{sponsor.username}}" style="margin-bottom: 10px;" class="form-control" type="text"  name="username">
+            <label class="form-label" for="email">email</label>
+            <input value="{{sponsor.email}}" style="margin-bottom: 10px;" class="form-control" type="text" name="email">
+            <p>Company-Details ➡️ </p>
+            <label class="form-label" for="companyname">Company Name</label>
+            <input value="{{sponsor.companyname}}" style="margin-bottom: 10px;" class="form-control" type="text" name="companyname">
+            <label for="profilepic" class="form-label">change profile picture</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="file" name="profilepic"/>
+            <label class="form-label" for="cbackground">Company background</label>
+            <textarea placeholder="{{sponsor.companybackground}}"  style="margin-bottom: 10px;" class="form-control" id="message" name="cbackground" rows="4" cols="80"></textarea><br>
+            <div style="display: flex; justify-content: center;">
+                <button style="width: 120px;" class="btn"  type="submit"><b>UPDATE</b></button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

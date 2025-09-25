@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ sponsor.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('sponsor_mycampaigns', id=sponsor.id)}}"><i class="fa-solid fa-globe"></i> My Campaigns</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container">
+        <h1>{{campaign.typeofcampaign}}</h1>
+        <p>Created on : {{campaign.created_on.strftime('%B %d, %Y')}}</p>
+        <hr>
+        <form action="{{url_for('editcampaign_post', id=campaign.id, sponsor_id=sponsor.id)}}" method="post">
+            <label for="budget" class="form-label">Budget : </label>
+            <input placeholder="{{campaign.budget}}" type="number" name="budget" class="form-control">
+
+            <label for="description" class="form-label">Description of campaign : </label>
+            <textarea placeholder="{{campaign.description}}" id="message" name="description" rows="4" cols="80"></textarea><br>
+
+            <label for="goals" class="form-label">Goal of campaign : </label>
+            <textarea placeholder="{{campaign.goals}}" id="message" name="goals" rows="4" cols="80"></textarea><br>
+
+            <label for="deadline" class="form-label">Deadline : </label>
+            <input type="date" name="deadline" class="form-control">
+
+            <label for="communication" class="form-label">Communicatiion Type :</label>
+            <select name="communication">
+                <option value="" disabled selected>communication</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+            </select><br>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+        {% if not ongoingevent %}
+        <p style="text-align: center;">-----There are no ongoing events in this campaign yet.-----</p>
+        <div class="button-container" style="justify-content: center; align-items: center;">
+            <a style="background-color:red;" href="{{url_for('deletecampaign', id=campaign.id, sponsor_id=sponsor.id)}}">Delete Campaign</a>
+        </div>
+        {% else %}
+        <div>
+            <p>There are ongoing events in this Campaign.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

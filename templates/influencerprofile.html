@@ -1,0 +1,109 @@
+{{ extends 'layout.html' }}
+{% block title %}{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div style="display: flex; flex-direction: row; gap: 0px;">
+        <a href="#" style="margin-right: 0px;"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        <p style="margin-left: 0px;">{{ influencer.username }}</p>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i>Home</a>
+    <a href="#">Profile</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i>Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i>Login</a>
+    {% endif %}
+</div>
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="background-color: lightsalmon;">
+        <h1>Hello, {{influencer.username}}</h1>
+        <h3>You can Update your profile.</h3>
+        <form action="" method="post">
+            <p style="font-size: larger;" class="underline"><b>Influence Details</b></p>
+            <label for="instafoll">Total followers (Instagram):</label>
+            <input type="number" id="instafoll" name="instafoll" placeholder="e.g., 100000">
+
+            <label for="fbfrnds">Total friends (Facebook):</label>
+            <input type="number" id="fbfrnds" name="fbfrnds" class="form-control" placeholder="e.g., 50000">
+
+            <label for="ytsub">Total subscribers (Youtube):</label>
+            <input type="number" id="ytsub" name="ytsub" class="form-control" placeholder="e.g., 9000">
+
+            <label for="lnconn">Total connections (LinkedIn):</label>
+            <input type="number" id="lnconn" name="lnconn" class="form-control" placeholder="e.g., 2000">
+            <br>
+        </form>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Makeup Tutorials"> Makeup Tutorials</label><br>
+        <label><input type="checkbox" name="niche[]" value="Skincare Routines"> Skincare Routines</label><br>
+        <label><input type="checkbox" name="niche[]" value="Fashion Hauls"> Fashion Hauls</label><br>
+        <label><input type="checkbox" name="niche[]" value="Outfit of the Day (OOTD)"> Outfit of the Day (OOTD)</label><br>
+        <label><input type="checkbox" name="niche[]" value="Beauty Product Reviews"> Beauty Product Reviews</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Workout Routines"> Workout Routines</label><br>
+        <label><input type="checkbox" name="niche[]" value="Nutrition Tips"> Nutrition Tips</label><br>
+        <label><input type="checkbox" name="niche[]" value="Yoga and Meditation"> Yoga and Meditation</label><br>
+        <label><input type="checkbox" name="niche[]" value="Weight Loss Journey"> Weight Loss Journey</label><br>
+        <label><input type="checkbox" name="niche[]" value="Fitness Challenges"> Fitness Challenges</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Travel Vlogs"> Travel Vlogs</label><br>
+        <label><input type="checkbox" name="niche[]" value="Destination Reviews"> Destination Reviews</label><br>
+        <label><input type="checkbox" name="niche[]" value="Travel Tips and Hacks"> Travel Tips and Hacks</label><br>
+        <label><input type="checkbox" name="niche[]" value="Adventure Sports"> Adventure Sports</label><br>
+        <label><input type="checkbox" name="niche[]" value="Cultural Experiences"> Cultural Experiences</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Cooking Tutorials"> Cooking Tutorials</label><br>
+        <label><input type="checkbox" name="niche[]" value="Restaurant Reviews"> Restaurant Reviews</label><br>
+        <label><input type="checkbox" name="niche[]" value="Food Blogging"> Food Blogging</label><br>
+        <label><input type="checkbox" name="niche[]" value="Recipe Development"> Recipe Development</label><br>
+        <label><input type="checkbox" name="niche[]" value="Wine and Beverage Tasting"> Wine and Beverage Tasting</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Tech Reviews"> Tech Reviews</label><br>
+        <label><input type="checkbox" name="niche[]" value="Unboxing Videos"> Unboxing Videos</label><br>
+        <label><input type="checkbox" name="niche[]" value="Gadget Comparisons"> Gadget Comparisons</label><br>
+        <label><input type="checkbox" name="niche[]" value="Software Tutorials"> Software Tutorials</label><br>
+        <label><input type="checkbox" name="niche[]" value="Tech News and Updates"> Tech News and Updates</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Daily Vlogs"> Daily Vlogs</label><br>
+        <label><input type="checkbox" name="niche[]" value="Home Decor"> Home Decor</label><br>
+        <label><input type="checkbox" name="niche[]" value="Personal Development"> Personal Development</label><br>
+        <label><input type="checkbox" name="niche[]" value="Productivity Tips"> Productivity Tips</label><br>
+        <label><input type="checkbox" name="niche[]" value="Minimalism"> Minimalism</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Parenting Tips"> Parenting Tips</label><br>
+        <label><input type="checkbox" name="niche[]" value="Family Vlogs"> Family Vlogs</label><br>
+        <label><input type="checkbox" name="niche[]" value="Educational Activities for Kids"> Educational Activities for Kids</label><br>
+        <label><input type="checkbox" name="niche[]" value="Home Schooling"> Home Schooling</label><br>
+        <label><input type="checkbox" name="niche[]" value="Family Travel"> Family Travel</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Game Playthroughs"> Game Playthroughs</label><br>
+        <label><input type="checkbox" name="niche[]" value="Game Reviews"> Game Reviews</label><br>
+        <label><input type="checkbox" name="niche[]" value="Live Streaming"> Live Streaming</label><br>
+        <label><input type="checkbox" name="niche[]" value="eSports Commentary"> eSports Commentary</label><br>
+        <label><input type="checkbox" name="niche[]" value="Gaming News"> Gaming News</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Personal Finance Tips"> Personal Finance Tips</label><br>
+        <label><input type="checkbox" name="niche[]" value="Investment Advice"> Investment Advice</label><br>
+        <label><input type="checkbox" name="niche[]" value="Entrepreneurship"> Entrepreneurship</label><br>
+        <label><input type="checkbox" name="niche[]" value="Business Strategies"> Business Strategies</label><br>
+        <label><input type="checkbox" name="niche[]" value="Real Estate"> Real Estate</label>
+    </div>
+    <div style="margin-left: 20px;">
+        <label><input type="checkbox" name="niche[]" value="Online Courses"> Online Courses</label><br>
+        <label><input type="checkbox" name="niche[]" value="Study Tips"> Study Tips</label><br>
+        <label><input type="checkbox" name="niche[]" value="Language Learning"> Language Learning</label><br>
+        <label><input type="checkbox" name="niche[]" value="Science Experiments"> Science Experiments</label><br>
+        <label><input type="checkbox" name="niche[]" value="History Lessons"> History Lessons</label>
+    </div>
+</div> 
+{% endblock body %}

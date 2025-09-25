@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block style %}
+<style>
+    body {
+        background-image: linear-gradient(red, yellow, blue);
+    }
+</style>
+{% endblock style %}
+{% block title %}login{% endblock title %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div style="display: flex; flex-direction: row; gap:0px;">
+        <div style="margin-left: 100px; width: 500px; height: 450px;">
+            <img width="500px" src="../static/logo/spin-04.png" alt="image of app logo" style=" border-radius: 5px;">
+        </div>
+        <div class="container" style="width:450px;background-color: rgb(142, 200, 245); margin: 0px; height: 400px;">
+            <h3 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Login</h3>
+            <hr>
+            <form style="margin-left: 35px;" action="{{url_for('login')}}" method="POST">
+                <label style="margin-top: 20px;" for="username" class="form-label">Username: </label>
+                <input style="margin-top: 20px;" type="text" id="username" name="username" required>
+                <label style="margin-top: 20px;" for="password" class="form-label">Password: </label>
+                <input style="margin-top: 20px;" type="password" id="password" name="password" required>
+                <button type="submit"><b>Login</b></button>
+            </form>
+            <p style=" margin-top: 10px; text-align: center;"><a href="{{url_for('register')}}">Register</a> if you are new here!</p>
+        </div>
+    </div>
+</div>
+<p style="font-size: large; text-align: center;">SpIn a platform for <b>Sp</b>onsors and <b>In</b>fluencers !</p>
+{% include 'footer.html' %}
+{% endblock body %}

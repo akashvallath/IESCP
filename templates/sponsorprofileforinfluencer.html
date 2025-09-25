@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% block title %}Sponsor{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a href="{{ url_for('influencer_find_campaign', id=influencer.id )}}"><i class="fa-solid fa-magnifying-glass"></i> Campaigns</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div style="background-color:darkgray" class="container"><hr>
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="margin-left: 30px;">
+                    {% if sponsor.profilepic %}
+                    {% set filename = sponsor.username + sponsor.file_extension %}
+                    <img class="profileimage" src="{{url_for('static', filename='profilepics/' + filename)}}">
+                    {% else %}
+                    <img class="profileimage" src="https://api.dicebear.com/9.x/bottts/svg?seed=Felix">
+                    {% endif %}
+                </div>
+                <h5 style="margin-top: 10px; margin-left: 60px;">{{ sponsor.username }}</h5>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-top: 50px;">
+                <p style="margin-left: 20px;">Company : <b>{{ sponsor.companyname }}</b></p>
+                <p style="margin-left: 20px;">industry sector : <b>{{ sponsor.industrysector }}</b></p>
+                <p style="margin-left: 20px;">{{ sponsor.companybackground }}</p>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <p style="margin-left: 30px;">contact : <b>{{ sponsor.email }}</b></p>
+        </div><hr>
+    </div>
+    <div class="search">
+        <table style="display: flex; flex-direction: row; justify-content: space-between;">
+        <form role="search" >
+        <tr>
+            <td>
+            <select class="form-select" name="type" style="width: 250px; height: 40px; margin-top: 2px;">
+                <option value="" disabled selected>campaign type</option>
+                <option value="Sponsored_Content">Sponsored Content</option>
+                <option value="Product_Review">Product Reviews</option>
+                <option value="Giveaway_and_contests">Giveaways and Contests</option>
+                <option value="Affiliate_Marketing">Affiliate Marketing</option>
+                <option value="Brand_Ambassadorship">Brand Ambassadorships</option>
+                <option value="Event_Hosting_and_Participation">Event Hosting and Participation</option>
+                <option value="Content_Creation">Content Creation</option>
+                <option value="Collaborative_Products">Collaborative Products</option>
+                <option value="Social_Media_Challenges">Social Media Challenges</option>
+                <option value="Interviews_and_Features">Interviews and Features</option>
+                <option value="Educational_Content">Educational Content</option>
+                <option value="Collaborative_Live_Streams">Collaborative Live Streams</option>
+            </select>
+            </td>
+            <td>
+                <button class="btn btn-primary" style="height: 40px; margin-top: 2px;"><b>search</b></button>
+            </td>
+        </tr>
+        </form>
+        </table>
+    </div>
+    <div class="container">
+        <h5>Campaigns 😍</h5>
+        {% if campaigns %}
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>TYPE</th>
+            <th>BUDGET</th>
+            <th>DESCRIPTION</th>
+            <th>DEADLINE</th>
+            <th>ACTION</th>
+        </tr>
+        {% for campaign in campaigns %}
+        <tr>
+            <td><a href="{{url_for('campaign', cmpid=campaign.id, infid=influencer.id)}}"><b>{{ campaign.name }}</b></a></td>
+            <td>{{ campaign.typeofcampaign }}</td>
+            <td>{{campaign.budget}}</td>
+            <td style="max-width: 250px;">{{campaign.description}}</td>
+            <td>{{campaign.deadline.strftime('%B %d, %Y')}}</td>
+            <td><a href="{{url_for('influencer_request',campaign_id=campaign.id, influencer_id=influencer.id)}}"><b>send request</b></a></td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">Sorry No campaigns available!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

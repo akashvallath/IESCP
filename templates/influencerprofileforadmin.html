@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="navbar">
+    <div style="margin-left: 10px;">
+        <img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi">
+        <h5 style="display: inline;">{{ admin.username }}</h5>
+    </div>
+    <a href="{{url_for('find_influencersforadmin', id=admin.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Influencers</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('find_sponsorsforadmin', id=admin.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Sponsors</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="background-color:burlywood;"><hr>
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="margin-left: 30px;">
+                    {% if influencer.profilepic %}
+                    {% set filename = influencer.username + influencer.file_extension %}
+                    <img class="profileimage" src="{{url_for('static', filename='profilepics/' + filename)}}">
+                    {% else %}
+                    <img class="profileimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Callie">
+                    {% endif %}
+                </div>
+                <h5 style="margin-top: 20px; margin-left: 70px;">{{ influencer.username }}</h5>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-top: 50px;">
+                <p style="margin-left: 20px;">Full Name : <b>{{ influencer.fullname }}</b></p>
+                <p style="margin-left: 20px;">Niche : <b>#{{ influencer.niche }}</b></p>
+                <p style="margin-left: 20px;">{{ influencer.aboutyou}}</p>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <p style="margin-left: 30px;">contact : <b>{{ influencer.email }}</b></p>
+            <div style="margin-left: 10px; display: flex; flex-direction: row;">
+                {% if influencer.instagram %}
+                <i class="fa-brands fa-instagram" style="margin-left: 20px;"></i>
+                {% endif %}
+                {% if influencer.facebook %}
+                <i class="fa-brands fa-facebook" style="margin-left: 20px;"></i>
+                {% endif %}
+                {% if influencer.youtube %}
+                <i class="fa-brands fa-youtube" style="margin-left: 20px;"></i>
+                {% endif %}
+                {% if influencer.linkedin %}
+                <i class="fa-brands fa-linkedin" style="margin-left: 20px;"></i>
+                {% endif %}
+            </div>
+        </div><hr>
+    </div>
+    <div class="container">
+        <h5 style="margin-left: 10px;">Ongoing Campaigns →</h5>
+        {% if ongoing_campaigns %}
+        <table>
+        <tr>
+            <th>CAMPAIGN NAME</th>
+            <th>SPONSOR</th>
+            <th>TYPE</th>
+            <th>BUDGET</th>
+            <th>START DATE</th>
+            <th>END DATE</th>
+        </tr>
+        {% for campaign in ongoing_campaigns %}
+        <tr>
+            <td><a href="{{url_for('campaigndetailsforadmin', id=admin.id, campaign_id=campaign.id)}}"><b>{{ campaign.campaign.name }}</b></a></td>
+            <td>{{ campaign.sponsor.username }}</td>
+            <td>{{ campaign.campaign.typeofcampaign }}</td>
+            <td>{{ campaign.budget }}</td>
+            <td>{{ campaign.campaign.created_on.strftime('%B %d, %Y') }}</td>
+            <td>{{ campaign.campaign.deadline.strftime('%B %d, %Y') }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">{{ influencer.fullname }} has No Ongoing Campaigns!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

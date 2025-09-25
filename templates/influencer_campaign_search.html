@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+{% block title %}search-campaign{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{ url_for('influencer_find_campaign', id=influencer.id )}}"><i class="fa-solid fa-magnifying-glass"></i> Campaigns</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="search" style="background-color: black;">
+        <table>
+        <form role="search"  style="display: flex; flex-direction: row;">
+        <tr>
+            <td>
+                <select class="form-select" name="company" style="width: 200px; height: 40px;">
+                    <option value="" disabled selected>company name</option>
+                    {% if companies %}
+                    {% for company in companies %}
+                    <option value="{{ company.companyname }}">{{ company.companyname }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </td>
+            <td>
+                <label for="budget" style="color: white; margin-top: 7px; font-size: large;">Min-Budget</label>
+            </td>
+            <td>
+                <input type="search" name="budget" class="form-control" style="width: 150px; height: 40px;">
+            </td>
+            <td>
+                <select class="form-select" name="campaigntype" style="width: 250px; height: 40px; margin-top: 2px;">
+                    <option value="" disabled selected>select campaign type</option>
+                    <option value="Sponsored_Content">Sponsored Content</option>
+                    <option value="Product_Review">Product Reviews</option>
+                    <option value="Giveaway_and_contests">Giveaways and Contests</option>
+                    <option value="Affiliate_Marketing">Affiliate Marketing</option>
+                    <option value="Brand_Ambassadorship">Brand Ambassadorships</option>
+                    <option value="Event_Hosting_and_Participation">Event Hosting and Participation</option>
+                    <option value="Content_Creation">Content Creation</option>
+                    <option value="Collaborative_Products">Collaborative Products</option>
+                    <option value="Social_Media_Challenges">Social Media Challenges</option>
+                    <option value="Interviews_and_Features">Interviews and Features</option>
+                    <option value="Educational_Content">Educational Content</option>
+                    <option value="Collaborative_Live_Streams">Collaborative Live Streams</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-primary" style="height: 40px; margin-top: 2px;"><b>search</b></button>
+            </td>
+            <td>
+                <input class="form-control" type="search" name="query" placeholder="campaign name" style="width: 200px; height: 40px;">
+            </td>
+        </tr>
+        </form>
+        </table>
+    </div>
+    <div class="container">
+        <h4 style="margin-left: 10px; margin-bottom: 15px; font-family: 'Times New Roman', Times, serif;">Campaign's 😀</h4>
+        {% if campaigns %}
+        <table>
+            <tr>
+                <th>CAMPAIGN NAME</th>
+                <th>SPONSOR</th>
+                <th>TYPE</th>
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>BUDGET</th>
+                <th>REQUEST</th>
+            </tr>
+        {% for campaign in campaigns %}
+            <tr>
+                <td><a href="{{url_for('campaign', cmpid=campaign.id, infid=influencer.id)}}"><b>{{ campaign.name }}</b></a></td>
+                <td>{{ campaign.sponsor.companyname }}</td>
+                <td>{{ campaign.typeofcampaign }}</td>
+                <td>{{ campaign.created_on.strftime('%B %d, %Y') }}</td>
+                <td>{{ campaign.deadline.strftime('%B %d, %Y') }}</td>
+                <td><b>{{ campaign.budget }} ₹</b></td>
+                <td><a href="{{url_for('influencer_request', campaign_id=campaign.id, influencer_id=influencer.id)}}"><b>Request</b></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">No public campaigns  available to show!<p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

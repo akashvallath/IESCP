@@ -1,0 +1,95 @@
+{% extends 'layout.html' %}
+{% block title %}search-influencer{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div style="margin-left: 10px;">
+        <img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi">
+        <h5 style="display: inline;">{{ admin.username }}</h5>
+    </div>
+    <a href="{{url_for('influencer_fb', id=admin.id)}}"><i class="fa-solid fa-file-pen"></i> feedback</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('find_sponsorsforadmin', id=admin.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Sponsors</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="display: flex; background-color: rgb(148, 128, 216);">
+        <div style="margin-left: 50px;">
+            <h5>↓Total Influencers </h5>
+            <h2>{{ influencers | length }}</h2>
+        </div>
+    </div>
+    <div class="search">
+        <table style="display: flex; flex-direction: row; justify-content: space-between;">
+        <form role="search" >
+        <tr>
+            <td>
+                <select class="form-select" name="niche" style="width: 250px; height: 40px; margin-top: 2px;">
+                    <option value="" disabled selected>select niche</option>
+                    <option value="fashionandbeauty">Fashion and Beauty</option>
+                    <option value="healthandfitness">Health and Fitness</option>
+                    <option value="travelandadventure">Travel and Adventure</option>
+                    <option value="foodandbeverage">Food and Beverage</option>
+                    <option value="technologyandgadgets">Technology and Gadgets</option>
+                    <option value="lifestyle">Lifestyle</option>
+                    <option value="parentingandfamily">Parenting and Family</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="financeandbusiness">Finance and Business</option>
+                    <option value="education">Education</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-primary" style="height: 40px; margin-top: 2px;"><b>search</b></button>
+            </td>
+        </tr>
+        </form>
+        </table>
+    </div>
+    <div class="container">
+        <h4 style="margin-left: 10px; margin-bottom: 15px;">Influencers 😍</h4>
+        {% if influencers %}
+        <table>
+        <tr>
+            <th>USERNAME</th>
+            <th>FULLNAME</th>
+            <th>EMAIL</th>
+            <th>NICHE</th>
+            <th>PLATFORMS</th>
+            <th>FLAG</th>
+        </tr>
+        {% for influencer in influencers %}
+        <tr>
+            <td><a href="{{url_for('influencerprofileforadmin', id=admin.id, influencer_id=influencer.id)}}"><b>{{ influencer.username }}</b></a></td>
+            <td>{{ influencer.fullname }}</td>
+            <td>{{ influencer.email }}</td>
+            <td>{{ influencer.niche }}</td>
+            <td>
+                {% if influencer.instagram %}
+                <i class="fa-brands fa-instagram" style="margin-left: 5px;"></i>
+                {% endif %}
+                {% if influencer.facebook %}
+                <i class="fa-brands fa-facebook" style="margin-left: 5px;"></i>
+                {% endif %}
+                {% if influencer.youtube %}
+                <i class="fa-brands fa-youtube" style="margin-left: 5px;"></i>
+                {% endif %}
+                {% if influencer.linkedin %}
+                <i class="fa-brands fa-linkedin" style="margin-left: 5px;"></i>
+                {% endif %}
+            </td>
+            <td style="display: flex; flex-direction: row; justify-content: space-between;">
+                <a href="{{url_for('flaginfluencer', id=admin.id, influencer_id=influencer.id)}}">🚩flag</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">Sorry currently No Influencers are available!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

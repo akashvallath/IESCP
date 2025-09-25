@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block title %}Register{% endblock title %}
+{% block body %}
+{% block style %}
+{% endblock style %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="background-color: rgb(142, 200, 245); width: 1000px;">
+        <p style="text-align: center; font-size: xx-large; font-family:'Special Elite', sans-serif;">SpIn, connecting <u>Sp</u>onsors and <u>In</u>fluencers</p>
+    <br>
+    <hr>
+    <div>
+    <p>Are you a company or an individual looking to promote your product or service?
+        We have the best influencers in the country.
+        Feel free to Register !
+    </p>
+    <a href="{{url_for('sponsorregister')}}" class="btn btn-secondary">
+        <i class="fa-regular fa-handshake"></i>
+        Register as Sponsor
+    </a>
+    <hr>
+    <p> Or are you an influencer with a significant social media following?
+        This is the right place for you to meet sponsors and make a monetary benefit.
+    </p>
+    <a href="{{url_for('influencerregister')}}" class="btn btn-secondary">
+        <i class="fa-regular fa-handshake"></i>
+        Register as Influencer
+    </a>
+    <hr>
+    <p style="text-align: center;">
+        <a href="{{url_for('home')}}">Login</a> if you have an account
+    </p> 
+    <hr>
+    </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

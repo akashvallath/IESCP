@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a style="margin-right: 80px;" href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <p style="margin-left: 40px;">Just update want you want to update.You can leave everything else!</p>
+    <div class="container" style="width: 850px; margin-top: 30px; background-color: linen;">
+        <h2 style="text-align: center; color:rgb(93, 93, 208);">Update Account</h2>
+        <form action="{{url_for('influencer_editprofile_post', id=influencer.id)}}" method="POST" enctype="multipart/form-data">
+            <label for="username" class="form-label">Username</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.username}}" name="username">
+            <label for="fullname" class="form-label">Full Name</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.fullname}}" name="fullname">
+            <label for="email" class="form-label">Email</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="email" value="{{influencer.email}}" name="email">
+            <label for="profilepic" class="form-label">Upload profile picture</label>
+            <input class="form-control" type="file" name="profilepic"/>
+            <label for="aboutme" class="form-label">About Me</label>
+            <textarea placeholder="{{influencer.aboutyou}}" class="form-control" id="message" name="aboutme" rows="4" cols="80"></textarea>
+            {% if influencer.instagram %}
+            <label for="insta_link" class="form-label">Your Instagram profile link</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.my_data.insta_link}}" name="insta_link">
+            <label for="instafoll" class="form-label">Total Instagram Followers</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="number" value="{{influencer.my_data.insta_fol}}" name="instafoll">
+            {% endif %}
+            {% if influencer.facebook %}
+            <label for="facebook_link" class="form-label">Your Facebook profile link</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.my_data.facebook_link}}" name="facebook_link">
+            <label for="facebook_fol" class="form-label">Total Facebook Followers</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="number" value="{{influencer.my_data.facebook_fol}}" name="facebook_fol">
+            {% endif %}
+            {% if influencer.youtube %}
+            <label for="youtube_link" class="form-label">Your YouTube profile link</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.my_data.youtube_link}}" name="youtube_link">
+            <label for="youtube_fol" class="form-label">Total YouTube Followers</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="number" value="{{influencer.my_data.youtube_link}}" name="youtube_fol">
+            {% endif %}
+            {% if influencer.linkedin %}
+            <label for="linkedin_link" class="form-label">Your LinkedIn profile link</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="text" value="{{influencer.my_data.linkedin_link}}" name="linkedin_link">
+            <label for="linkedin_fol" class="form-label">Total LinkedIn Followers</label>
+            <input style="margin-bottom: 10px;" class="form-control" type="number" value="{{influencer.my_data.linkedin_fol}}" name="linkedin_fol">
+            {% endif %}
+            <div style="display: flex; justify-content: center;">
+                <button style="width: 120px;" class="btn"  type="submit"><b>UPDATE</b></button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

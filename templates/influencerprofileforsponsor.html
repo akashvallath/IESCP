@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block title %}Influencer-profile{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ sponsor.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('sponsor_mycampaigns', id=sponsor.id)}}"><i class="fa-solid fa-globe"></i> My Campaigns</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="background-color:burlywood;"><hr>
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="margin-left: 30px;">
+                    {% if influencer.profilepic %}
+                    {% set filename = influencer.username + influencer.file_extension %}
+                    <img class="profileimage" src="{{url_for('static', filename='profilepics/' + filename)}}">
+                    {% else %}
+                    <img class="profileimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Callie">
+                    {% endif %}
+                </div>
+                <h5 style="margin-top: 10px; margin-left: 65px;">{{ influencer.username }}</h5>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-top: 50px;">
+                <p style="margin-left: 20px;">Full Name : <b>{{ influencer.fullname }}</b></p>
+                <p style="margin-left: 20px;">Niche : <b>#{{ influencer.niche }}</b></p>
+                <p style="margin-left: 20px;">{{ influencer.aboutyou}}</p>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <p style="margin-left: 30px;">contact : <b>{{ influencer.email }}</b></p>
+            <div style="margin-left: 10px; display: flex; flex-direction: row;">
+                {% if influencer.instagram %}
+                <i class="fa-brands fa-instagram" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].insta_fol }}</p>
+                {% endif %}
+                {% if influencer.facebook %}
+                <i class="fa-brands fa-facebook" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].facebook_fol }}</p>
+                {% endif %}
+                {% if influencer.youtube %}
+                <i class="fa-brands fa-youtube" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].youtube_fol }}</p>
+                {% endif %}
+                {% if influencer.linkedin %}
+                <i class="fa-brands fa-linkedin" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].linkedin_fol }}</p>
+                {% endif %}
+            </div>
+        </div><hr>
+    </div>
+</div>
+{% endblock body %}

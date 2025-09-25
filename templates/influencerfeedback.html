@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %}Feedback{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a style="margin-right: 80px;" href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="width: 850px; margin-top: 30px; background-color:steelblue">
+        <h2 style="text-align: center;">Feedback Form</h2>
+        <form action="{{url_for('post_influencer_feedback', id=influencer.id)}}" method="POST">
+            <label for="campaignexperience" class="form-label">Campaign Experience</label>
+            <textarea placeholder="please mention the campaign details!" class="form-control" name="campaignexperience" rows="6" cols="100" required></textarea><hr>
+            <label for="suggestion" class="form-label">Suggestions</label>
+            <textarea class="form-control" name="suggestion" rows="6" cols="100" required></textarea>
+            <div style="display: flex; justify-content: center;">
+                <button style="width: 120px;" class="btn"  type="submit"><b>SEND</b></button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block title %}statistics{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div style="margin-left: 10px;">
+        <img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi">
+        <h5 style="display: inline;">{{ admin.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div style="margin-left: 240px; width: 700px; height: 700px;">
+        {% if acc_data['data'] %}
+        <h5 style="text-align: center;">Total Campaigns Created : {{ allc }}</h5>
+        <canvas id="myacChart"></canvas><hr>
+        {% else %}
+        <p style="text-align: center;">No campaigns created to show this Graph!</p>
+        {% endif %}
+        {% if tccdata['data'] %}
+        <h5 style="text-align: center;">Total Campaigns Joined : {{ tc_joined }}</h5>
+        <canvas id="myccChart"></canvas><hr>
+        {% else %}
+        <p style="text-align: center;">No Influencers Joined any campaign to show this Graph!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
+{% block script%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const cac = document.getElementById('myacChart');
+const alabels = {{ acc_data['labels'] | tojson }};
+const adata = {{ acc_data['data'] | tojson }};
+
+const ccc = document.getElementById('myccChart');
+const clabels = {{ tccdata['labels'] | tojson }};
+const cdata = {{ tccdata['data'] | tojson }};
+
+new Chart(cac, {
+type: 'bar',
+data: {
+    labels: alabels,
+    datasets: [{
+    label: '# of Campaigns',
+    data: adata,
+    borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+    y: {
+        beginAtZero: true
+    }
+    }
+}
+});
+
+new Chart(ccc, {
+type: 'bar',
+data: {
+    labels: clabels,
+    datasets: [{
+    label: '# of Completed Campaigns',
+    data: cdata,
+    borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+    y: {
+        beginAtZero: true
+    }
+    }
+}
+});
+</script>
+{% endblock script %}

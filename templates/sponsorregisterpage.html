@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block title %}sponsor-register{% endblock title %}
+{% block style %}
+{% endblock style %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="width: 850px; background-color: linen;">
+    <h3 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center; color:rgb(93, 93, 208);">Create Account</h3>
+    <hr>
+    <form action="{{url_for('sponsorregisterpost')}}" method="post" enctype="multipart/form-data">
+        <p>Account info ➡️ </p>
+        <label class="form-label" for="username">username</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="text"  placeholder="no need to be your real name !" name="username" required>
+        <label class="form-label" for="email">email</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="text" name="email" required>
+        <p>Company-Details ➡️ </p>
+        <label class="form-label" for="companyname">Company Name</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="text" name="companyname" required>
+        <label class="form-label" for="industrysector">Industry-Sector</label>
+        <select style="margin-bottom: 10px;" name="industrysector" required>
+            <option value="" disabled selected>Select your industry sector</option>
+            <option value="Technology">Technology</option>
+            <option value="Finance">Finance</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Education">Education</option>
+            <option value="Retail">Retail</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Hospitality">Hospitality</option>
+            <option value="Sports">Sports</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Others">Others</option>
+        </select>
+        <label for="profilepic" class="form-label">Upload profile picture</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="file" name="profilepic"/>
+        <label class="form-label" for="cbackground">Company background</label>
+        <textarea style="margin-bottom: 10px;" class="form-control" id="message" name="cbackground" rows="4" cols="80"></textarea><br>
+        <label class="form-label" for="password">password</label>
+        <input placeholder="minimum 8 characters" style="margin-bottom: 10px;" class="form-control" type="password" name="password" required>
+        <label class="form-label" for="confirm">confirm password</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="password" name="confirm" required>
+        <div style="display: flex; justify-content: center;">
+            <button style="width: 120px;" class="btn"  type="submit"><b>Register</b></button>
+        </div>
+    </form>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

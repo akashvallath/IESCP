@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+        {% if 'username' in session %}
+        <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+        {% else %}
+        <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        {% endif %}
+    </div>
+    <div class="content">
+        <p> Owner : <b>Akash Vallath</b></p>
+        <p>Email : <b>akashv9696@gmail.com</b></p>
+        <p>Student ID : <b>22f1000534</b></p>
+    </div> 
+</body>
+</html>
+
+
+

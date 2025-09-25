@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+{% block title %}My campaigns{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('sponsor_myprofile', id=sponsor.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ sponsor.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('find_influencers_for_sponsor', id=sponsor.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Influencers</a>
+    <a href="{{url_for('createcampaign', id = sponsor.id)}}"><i class="fa-solid fa-plus"></i> Add Campaign</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container">
+        <h4 style="margin-left: 10px; margin-bottom: 15px; font-family: 'Times New Roman', Times, serif;">Public Campaign's 😀</h4>
+        {% if public_campaigns %}
+        <table>
+            <tr>
+                <th>CAMPAIGN NAME</th>
+                <th>TYPE</th>
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>BUDGET</th>
+                <th>TOTAL-CONTESTANTS</th>
+                <th>ACTION</th>
+            </tr>
+        {% for campaign in public_campaigns %}
+            <tr>
+                <td><a href="{{url_for('camapign_details_forsponsor', id=campaign.id)}}"><b>{{ campaign.name }}</b></a></td>
+                <td>{{ campaign.typeofcampaign }}</td>
+                <td>{{ campaign.created_on.strftime('%B %d, %Y') }}</td>
+                <td>{{ campaign.deadline.strftime('%B %d, %Y') }}</td>
+                <td><b>{{ campaign.budget }} ₹</b></td>
+                {% if campaign.ongoing_events %}
+                <td>{{ campaign.ongoing_events | length }}</td>
+                {% else %}
+                <td>0</td>
+                {% endif %}
+                <td>
+                    <a href="{{url_for('editcampaign', id=campaign.id, sponsor_id=sponsor.id)}}"><b>Edit</b></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">No public campaigns created!<p>
+        {% endif %}
+    </div>
+    <div class="container">
+        <h4 style="margin-left: 10px; margin-bottom: 15px; font-family: 'Times New Roman', Times, serif;">Private Campaign's 🕵️</h4>
+        {% if private_campaigns %}
+        <table>
+            <tr>
+                <th>CAMPAIGN NAME</th>
+                <th>TYPE</th>
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>BUDGET</th>
+                <th>TOTAL-CONTESTANTS</th>
+                <th>ACTION</th>
+            </tr>
+        {% for campaign in private_campaigns %}
+            <tr>
+                <td><a href="{{url_for('camapign_details_forsponsor', id=campaign.id)}}"><b>{{ campaign.name }}</b></a></td>
+                <td>{{ campaign.typeofcampaign }}</td>
+                <td>{{ campaign.created_on.strftime('%B %d, %Y') }}</td>
+                <td>{{ campaign.deadline.strftime('%B %d, %Y') }}</td>
+                <td><b>{{ campaign.budget }} ₹</b></td>
+                {% if campaign.ongoing_events %}
+                <td>{{ campaign.ongoing_events | length }}</td>
+                {% else %}
+                <td>0</td>
+                {% endif %}
+                <td>
+                    <a href="{{url_for('editcampaign', id=campaign.id, sponsor_id=sponsor.id)}}"><b>Edit</b></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        <p style="margin-left: 10px;">No public campaigns created!<p>
+        {% endif %}
+    </div>
+    <div class="button-container" style="justify-content: center; align-items: center; margin-top: 10px;">
+        <a href="{{url_for('createcampaign', id = sponsor.id )}}"><i class="fa-solid fa-plus"></i>Add Campaign</a>
+    </div>
+</div>
+{% endblock body %}

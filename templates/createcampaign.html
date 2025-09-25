@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block title %}campaign-register{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if sponsor.profilepic %}
+        {% set filename = sponsor.username + sponsor.file_extension %}
+        <a style="display: inline;" class="no-hover" href="#"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="#"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Mimi"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ sponsor.username }}</h5>
+    </div>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('sponsor_mycampaigns', id=sponsor.id)}}"><i class="fa-solid fa-globe"></i> My Campaigns</a>
+    <a href="{{url_for('find_influencers_for_sponsor', id=sponsor.id)}}"><i class="fa-solid fa-magnifying-glass"></i> Influencers</a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="width: 850px; background-color: linen;">
+        <h3 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center; color:rgb(93, 93, 208);">Create Campaign</h3>
+        <hr>
+        <form action="{{url_for('createcampaign_post', id = sponsor.id )}}" method="POST">
+            <label for="name" class="form-label">Name of Campaign</label>
+            <input type="text" name="name" class="form-control" required>
+            
+            <label class="form-label" for="campaigntype">Campaign Type</label>
+            <select name="campaigntype" required>
+                <option value="" disabled selected>select your campaign type</option>
+                <option value="Sponsored_Content">Sponsored Content</option>
+                <option value="Product_Review">Product Reviews</option>
+                <option value="Giveaway_and_contests">Giveaways and Contests</option>
+                <option value="Affiliate_Marketing">Affiliate Marketing</option>
+                <option value="Brand_Ambassadorship">Brand Ambassadorships</option>
+                <option value="Event_Hosting_and_Participation">Event Hosting and Participation</option>
+                <option value="Content_Creation">Content Creation</option>
+                <option value="Collaborative_Products">Collaborative Products</option>
+                <option value="Social_Media_Challenges">Social Media Challenges</option>
+                <option value="Interviews_and_Features">Interviews and Features</option>
+                <option value="Educational_Content">Educational Content</option>
+                <option value="Collaborative_Live_Streams">Collaborative Live Streams</option>
+            </select>
+            <label for="budget" class="form-label">Budget </label>
+            <input type="number" name="budget" class="form-control" required>
+
+            <label for="description" class="form-label">Description of campaign </label>
+            <textarea class="form-control" id="message" name="description" rows="4" cols="80" required></textarea>
+
+            <label for="goals" class="form-label">Goals </label>
+            <textarea class="form-control" id="message" name="goals" rows="3" cols="80" required></textarea>
+
+            <label class="form-label" for="target">Target Audience </label>
+            <select name="target" required>
+                <option value="" disabled selected>select your audience</option>
+                <option value="All">All</option>
+                <option value="Teenagers">Teenagers</option>
+                <option value="Children">Children</option>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Girls">Girls</option>
+                <option value="Boys">Boys</option>
+                <option value="Adult">Adult</option>
+                <option value="Seniors">Seniors</option>
+            </select>
+            <label for="deadline" class="form-label">Deadline </label>
+            <input type="date" name="deadline" class="form-control">
+            <label class="form-label" for="campaigntype">Communication Preferred </label>
+            <select name="communicationtype" required>
+                <option value="" disabled selected>Select your communication preference</option>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+            </select>
+            <br>
+            <div style="display: flex; justify-content: center;">
+                <button style="width: 120px;" class="btn"  type="submit"><b>CREATE</b></button>
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}

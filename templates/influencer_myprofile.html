@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+<div class="navbar">
+    <div>
+        {% if influencer.profilepic %}
+        {% set filename = influencer.username + influencer.file_extension %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="{{url_for('static', filename='profilepics/' + filename)}}"></a>
+        {% else %}
+        <a style="display: inline;" class="no-hover" href="{{url_for('influencer_myprofile', id=influencer.id)}}"><img class="roundimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Callie"></a>
+        {% endif %}
+        <h5 style="display: inline;">{{ influencer.username }}</h5>
+    </div>
+    <a href="{{url_for('influencer_stats', id=influencer.id)}}"><i class="fa-solid fa-chart-column"></i> Stats</a>
+    <a href="{{url_for('home')}}"><i class="fa-solid fa-house-user"></i> Home</a>
+    <a href="{{url_for('influencer_feedback', id=influencer.id)}}"><i class="fa-solid fa-file-pen"></i> feedback</a>
+    <a href="{{url_for('influencer_completed_campaigns', id= influencer.id)}}">Completed campaign <i class="fa-solid fa-circle-info"></i></a>
+    {% if 'username' in session %}
+    <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-to-bracket"></i> Logout</a>
+    {% else %}
+    <a href="{{url_for('login')}}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    {% endif %}
+</div>
+{% include 'message.html' %}
+<div class="content">
+    <div class="container" style="background-color:burlywood;"><hr>
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column;">
+                <div style="margin-left: 30px;">
+                    {% if influencer.profilepic %}
+                    {% set filename = influencer.username + influencer.file_extension %}
+                    <img class="profileimage" src="{{url_for('static', filename='profilepics/' + filename)}}">
+                    {% else %}
+                    <img class="profileimage" src="https://api.dicebear.com/9.x/thumbs/svg?seed=Callie">
+                    {% endif %}
+                </div>
+                <h5 style="margin-top: 10px; margin-left: 75px;">{{ influencer.username }}</h5>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-top: 50px;">
+                <p style="margin-left: 30px;">Full Name : <b>{{ influencer.fullname }}</b></p>
+                <p style="margin-left: 30px;">Niche : <b>#{{ influencer.niche }}</b></p>
+                <p style="margin-left: 30px;">{{ influencer.aboutyou}}</p>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <p style="margin-left: 30px;">contact : <b>{{ influencer.email }}</b></p>
+            <div style="margin-left: 10px; display: flex; flex-direction: row;">
+                {% if influencer.instagram %}
+                <i class="fa-brands fa-instagram" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].insta_fol }}</p>
+                {% endif %}
+                {% if influencer.facebook %}
+                <i class="fa-brands fa-facebook" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].facebook_fol }}</p>
+                {% endif %}
+                {% if influencer.youtube %}
+                <i class="fa-brands fa-youtube" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].youtube_fol }}</p>
+                {% endif %}
+                {% if influencer.linkedin %}
+                <i class="fa-brands fa-linkedin" style="margin-top: 1px; margin-left: 20px;"></i>
+                <p style="margin-left: 2px;">{{ influencer.my_data[0].linkedin_fol }}</p>
+                {% endif %}
+            </div>
+            <div class="button-container" style="justify-content: center;">
+                <a href="{{url_for('influencer_editprofile', id=influencer.id)}}" class="btn primary"><b>UPDATE</b></a>
+            </div><hr>
+        </div>
+    </div>
+</div>
+{% endblock body %}

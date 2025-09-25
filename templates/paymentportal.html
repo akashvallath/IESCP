@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="content">
+    {% include 'message.html' %}
+    <div class="container" style="width: 900px; background-color:linen;">
+    <h2 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; text-align: center; color:rgb(93, 93, 208);">CARD DETAILS</h2>
+    <p>{{completedcampaign.influencer.username}} has succesully completed your campaign {{completedcampaign.campaign.name}}
+        on {{completedcampaign.completeddate.strftime('%B %d, %Y')}}. You have agreed to pay an amount of {{completedcampaign.budget}}₹ after completion.
+        Thankyou.
+    </p>
+    <hr>
+    <form action="{{url_for('post_dopayment', id=sponsor.id, campaign_id=completedcampaign.id)}}" method="POST">
+        <label for="cardnumber" class="form-label">Card Number</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="number" name="cardnumber" required>
+        <label for="cvv" class="form-label">CVV</label>
+        <input style="width: 70px; margin-bottom: 10px;" class="form-control" type="number" name="cvv" required>
+        <label for="password" class="form-label">Enter your Password</label>
+        <input style="margin-bottom: 10px;" class="form-control" type="password" id="password" name="password" required>
+        <div style="display: flex; justify-content: center;">
+            <button style="width: 120px;" class="btn"  type="submit"><b>PAY</b></button>
+        </div>
+        <hr>
+    </form>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock body %}
