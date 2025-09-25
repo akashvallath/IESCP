@@ -4,7 +4,7 @@ It's a platform to connect Sponsors and Influencers so that sponsors can get the
 product/service advertised and influencers can get monetary benefit.
 
 ---
-# NOTE
+## NOTE
 
 For this Application I have used flask framework to create the backend of the application. 
 The Frontend is purely made through HTML, and CSS. Only a very small amount of JavaScript has 
@@ -12,7 +12,7 @@ been used in the project. No Asynchronous function are used anywhere. Every requ
 to the Flask backend server, which then renders the appropriate content back to the browser after 
 performing s all calculations and interactions with the database.
 
-# Technologies Used 
+## Technologies Used 
 
 - Flask : Backend Framework for building the application -
 -  SQL-ALCHEMY : ORM(object-Relational-Mapping) tool for database Interaction 
@@ -27,7 +27,7 @@ performing s all calculations and interactions with the database.
 - Werkzeug : utility for securely managing passwords and authentication 
 - ChartJs : Used for creating charts
 
-# API
+## API
 
 SponsorAPI : For getting sponsor detail for a given id 
 End Point :  /api/<int:id>/sponsor 
@@ -36,7 +36,8 @@ End Point :  /api/<int:id>/influencer
 CampaignAPI : For getting Campaign details for a given id 
 End Point :  /api/<int:id>/campaign 
 
-# YOUTUBE
+## YOUTUBE
 
 https://www.youtube.com/watch?v=W8pO828mPK4&list=PLzCyUSjRa8prdNTZjEB6swq8zRWBEVo5V 
+
 
